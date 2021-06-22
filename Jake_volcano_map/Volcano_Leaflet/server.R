@@ -11,12 +11,16 @@
 
 function(input, output, session) {
   
+  
+  # read in the prepared data 
+  # (just the volcanoes spreadsheet with a new column for "continent")
   volcano <- readr::read_rds(here::here("data", "volcanoes.rds"))
   
   
   # make reactive dataset
   # ------------------------------------------------
-  # subset volcano data with input check boxes
+  # Make a subset of the data as a reactive value
+  # this subset pulls volcano rows only in the selected types of volcano
   selected_volcanoes <- reactive({
     volcano %>%
       
@@ -36,7 +40,7 @@ function(input, output, session) {
   
   
   
-  # make output element for continents ggplot 
+  # make output element for continents barplot 
   #------------------------------------------------------------
   output$continentplot <- renderPlot({
     
@@ -53,7 +57,7 @@ function(input, output, session) {
       theme(axis.text.x = element_text(angle=45,hjust=1))
     
     
-    # update ggplot if selected volcanoes object exists 
+    # IF a selected_volcanoes() object exists, update the blank ggplot. 
     # basically this makes it not mess up when nothing is selected
     if(nrow(selected_volcanoes()) >1){ 
       barplot <- barplot +
@@ -68,7 +72,6 @@ function(input, output, session) {
     barplot
     
   }) # end renderplot command
-  
   
   
   
