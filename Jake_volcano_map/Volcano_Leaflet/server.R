@@ -80,7 +80,7 @@ function(input, output, session) {
   output$volcanomap <- renderLeaflet({
     
     # add blank leaflet map 
-    leaflet('map', options = leafletOptions(minZoom = 0, maxZoom = 10, zoomControl = TRUE)) %>%
+    leaflet('map1', options = leafletOptions(minZoom = 0, maxZoom = 10, zoomControl = TRUE)) %>%
       # add map tiles from CartoDB. 
       addProviderTiles("CartoDB.VoyagerNoLabels") %>%
       # set lat long and zoom to start
@@ -121,6 +121,7 @@ function(input, output, session) {
                        "<b> Continent: </b>",continent, "<br>",
                        "<b> Elevation: </b>", elevation, "ft.") 
       ) # end add circle markers
+    
   }) # end observe
   
   
