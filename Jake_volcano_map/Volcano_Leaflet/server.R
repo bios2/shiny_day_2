@@ -22,6 +22,9 @@ function(input, output, session) {
   # Make a subset of the data as a reactive value
   # this subset pulls volcano rows only in the selected types of volcano
   selected_volcanoes <- reactive({
+    
+    req(input$volcano_type)
+    
     volcano %>%
       
       # select only volcanoes in the selected volcano type (by checkboxes in the UI)
@@ -59,14 +62,13 @@ function(input, output, session) {
     
     # IF a selected_volcanoes() object exists, update the blank ggplot. 
     # basically this makes it not mess up when nothing is selected
-    if(nrow(selected_volcanoes()) >1){ 
+    
       barplot <- barplot +
         geom_bar(data = selected_volcanoes(), show.legend = F) +
         scale_fill_manual(values = RColorBrewer::brewer.pal(9,"Set1"), 
                           drop=F) +
         scale_x_discrete(drop=F)
       
-    }
     
     # print the plot
     barplot
@@ -80,7 +82,7 @@ function(input, output, session) {
   output$volcanomap <- renderLeaflet({
     
     # add blank leaflet map 
-    leaflet('map1', options = leafletOptions(minZoom = 0, maxZoom = 10, zoomControl = TRUE)) %>%
+    leaflet(options = leafletOptions(minZoom = 0, maxZoom = 10, zoomControl = TRUE)) %>%
       # add map tiles from CartoDB. 
       addProviderTiles("CartoDB.VoyagerNoLabels") %>%
       # set lat long and zoom to start
