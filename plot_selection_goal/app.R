@@ -9,6 +9,8 @@
 
 library(shiny)
 library(tidyverse)
+library(gghighlight)
+source(here::here("R", "plot_one_volcano_type.R"))
 source(here::here("R", "mod_plot_selection.R"))
 
 # Define UI for application that draws a histogram
@@ -16,8 +18,14 @@ ui <- fluidPage(
 
     # Application title
     titlePanel("volcano data"),
-    mod_plot_selection_ui("plot_selection_1"),
-    tableOutput("data")
+    fluidRow(
+        column(6,
+               mod_plot_selection_ui("plot_selection_1"),
+               tableOutput("data")
+        ),
+        column(6,
+               plotOutput("plot_step")
+        ))
 
 )
 
@@ -41,6 +49,12 @@ server <- function(input, output) {
         # browser()
         tablepoints()
     })
+    
+    output$plot_step <- renderPlot({
+        
+        req(tablepoints())
+        # browser()
+        plot_one_volcano_type(tablepoints(), full_volcano_data = volcano)})
 }
 
 # Run the application 
