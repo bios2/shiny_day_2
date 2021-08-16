@@ -52,7 +52,7 @@ function(input, output, session) {
     
     # IF a selected_volcanoes() object exists, update the blank ggplot. 
     # basically this makes it not mess up when nothing is selected
-    if(nrow(selected_volcanoes()) >1){ 
+    if(nrow(selected_volcanoes()) >=1){ 
       barplot <- barplot +
         geom_bar(data = selected_volcanoes(), show.legend = F) +
         scale_fill_manual(values = RColorBrewer::brewer.pal(9,"Set1"), 
@@ -73,7 +73,7 @@ function(input, output, session) {
   output$volcanomap <- renderLeaflet({
     
     # add blank leaflet map 
-    leaflet('map1', options = leafletOptions(minZoom = 0, maxZoom = 10, zoomControl = TRUE)) %>%
+    leaflet( options = leafletOptions(minZoom = 0, maxZoom = 10, zoomControl = TRUE)) %>%
       # add map tiles from CartoDB. 
       addProviderTiles("CartoDB.VoyagerNoLabels") %>%
       # set lat long and zoom to start
@@ -119,3 +119,4 @@ function(input, output, session) {
   
   
 } # end the server page
+

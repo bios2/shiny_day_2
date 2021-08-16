@@ -23,7 +23,7 @@ header <- dashboardHeader(
 
 # create dashboard body - this is the major UI element
 body <- dashboardBody(
-    
+
     # make first row of elements (actually, this will be the only row)
     fluidRow(
         
@@ -31,7 +31,35 @@ body <- dashboardBody(
         column(width = 3,
                
                
-               # box 1 : input for selecting volcano type
+               # Box 1: text explaining what this app is
+               #-----------------------------------------------
+               box( width = NULL,
+                    status="primary", # this line can change the automatic color of the box. options are "info", "primary","warning","danger', and "success"
+                    title = NULL,
+                   # background = "black",
+
+                    # add some text in bold
+                   strong("Example Shiny Dashboard for the"  ,
+                          a("BIOS2 Program", href="https://bios2.usherbrooke.ca/"),
+                          "training module, \"Creating Shiny Applications in R.\""),
+                   
+                   # linebreak
+                   br(),
+                   
+                   # text in normal
+                   p("Use the space provided and suggestions in the code to add  an additional widget to the app."),
+                   
+                   # linebreak
+                   br(),
+                   
+                   # text with link to
+                   p("Created by Jake Lawlor.",  strong(a("See Code Here!", href="https://bios2.usherbrooke.ca/")))
+                
+                 
+               ), # end box 1
+               
+               
+               # box 2 : input for selecting volcano type
                #-----------------------------------------------
                box(width = NULL, status = "primary",
                    title  = "Selection Criteria", solidHeader = T, 
@@ -50,11 +78,9 @@ body <- dashboardBody(
                    ), # end checkboxGroupButtons
                    
                    
-                   br(),
+                   strong("Space for your additional widget here:"),
                    
-                   strong("Space for your addition here:"),
-                   
-                   br(), br(), br(), br(), br(), br(), # add a bunch of line breaks to leave space. these can be removed
+                   br(), br(), br(), br(), br(), # add a bunch of line breaks to leave space. these can be removed
                    
                    # space for your addition here:
                    #-------------------------------------------
@@ -72,26 +98,28 @@ body <- dashboardBody(
                    # see available widgets here: http://shinyapps.dreamrs.fr/shinyWidgets/
 
                    
-               ), # end box 1
+               ), # end box 2
                
                
                
-               # box 2: ggplot of selected volcanoes by continent
+               # box 3: ggplot of selected volcanoes by continent
                #------------------------------------------------
                box(width = NULL, status = "primary",
                    solidHeader = TRUE, collapsible = T,
                    title = "Volcanoes by Continent",
                    plotOutput("continentplot", # this calls to object continentplot that is made in the server page
-                              height = 350)
-               ) # end box 2
+                              height = 325)
+               ) # end box 3
+               
         ), # end column 1
          
         # second column - 75% of page (9 of 12 columns)
+        #--------------------------------------------------
         column(width = 9,
                
                # Box 3: leaflet map
                box(width = NULL, background = "light-blue", 
-                   leafletOutput("volcanomap", height = 760) 
+                   leafletOutput("volcanomap", height = 850) 
                    # this draws element called volcanomap, which is created in the "server" tab
                ) # end box with map
         ) # end second column
@@ -102,6 +130,7 @@ body <- dashboardBody(
 
 # compile dashboard elements
 dashboardPage(
+    skin = "blue",
     header = header,
     sidebar = dashboardSidebar(disable = TRUE), # here, we only have one tab, so we don't need a sidebar
     body = body
