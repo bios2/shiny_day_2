@@ -10,7 +10,7 @@
 mod_plot_selection_ui <- function(id){
   ns <- NS(id)
   tagList(
-    plotOutput(ns("plot"), click = ns("plot_click"))
+    plotOutput(ns("plot"), hover = ns("plot_click"))
   )
 }
     
